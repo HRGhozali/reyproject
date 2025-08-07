@@ -28,9 +28,13 @@ export class Search {
   searchMany() {  // Do later
     this.isWaitingResponse = true;
     try {
-      this.httpService.postDataNoAuth("users/getList", {
+      this.searchList = [];
+      let getActiveRaw = this.searchMany_form.value?.getActive;
+      let getActive = (getActiveRaw === 'True') ? true : false;
+      console.log(`${this.searchMany_form.value?.search}, ${this.searchMany_form.value?.getActive}`)
+      this.httpService.postData("users/getList", {
         search: this.searchMany_form.value?.search,
-        getActive: this.searchMany_form.value?.getActive,
+        getActive: getActive,
       }).subscribe((res) => {
         if (res.error) {
           console.log("Error searching users: ", res?.message);
@@ -38,17 +42,17 @@ export class Search {
         }
         else {
           console.log(`Successful search`);
-          for (let i = 0; i < res.userMatches.length; i++) {
+          for (let i = 0; i < res.data?.length; i++) {
             let match : SearchResults = {
-              id: res.userMatches[i].id,
-              fullName: `${res.userMatches[i].firstName} ${res.userMatches[i].lastName}`,
-              email: res.userMatches[i].email,
+              id: res.data[i].id,
+              fullName: `${res.data[i].firstName} ${res.data[i].lastName}`,
+              email: res.data[i].email,
               session: -1,
               createdBy: 'irrelevant',
               updatedBy: 'irrelevant',
               isList: true,
-              accessName: res.userMatches[i].accessName,
-              active: res.userMatches[i].active
+              accessName: res.data[i].accessName,
+              active: res.data[i].active
             }
             this.searchList.push(match);
           }
@@ -67,7 +71,7 @@ export class Search {
     this.isWaitingResponse = true;
     this.searchList = [];
     try {
-      this.httpService.postDataNoAuth("users/getUser", {
+      this.httpService.postData("users/getUser", {
         id: this.searchOne_form.value?.id,
         email: this.searchOne_form.value?.email,
       }).subscribe((res) => {
@@ -77,14 +81,14 @@ export class Search {
         }
         else {
           console.log(`Successful search`);
-          for (let i = 0; i < res.userMatches.length; i++) {
+          for (let i = 0; i < res.data?.length; i++) {
             let match : SearchResults = {
-              id: res.userMatches[i].id,
-              fullName: res.userMatches[i].fullName,
-              email: res.userMatches[i].email,
-              session: res.userMatches[i].session,
-              createdBy: res.userMatches[i].createdBy,
-              updatedBy: res.userMatches[i].updatedBy,
+              id: res.data[i].id,
+              fullName: res.data[i].fullName,
+              email: res.data[i].email,
+              session: res.data[i].session,
+              createdBy: res.data[i].createdBy,
+              updatedBy: res.data[i].updatedBy,
               isList: false,
               accessName: 'irrelevant',
               active: true
