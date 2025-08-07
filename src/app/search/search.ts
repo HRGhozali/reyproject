@@ -28,10 +28,15 @@ export class Search {
   searchMany() {  // Do later
     this.isWaitingResponse = true;
     try {
-      this.httpService.postDataNoAuth("users/edit", {
+      this.httpService.postDataNoAuth("users/getList", {
         search: this.searchMany_form.value?.search,
         getActive: this.searchMany_form.value?.getActive,
       }).subscribe((res) => {
+        if (res.error) {
+          console.log("Error searching users: ", res?.message);
+          alert(`Failed to search users: ${res.message}`);
+        }
+        else {
           console.log(`Successful search`);
           for (let i = 0; i < res.userMatches.length; i++) {
             let match : SearchResults = {
@@ -48,12 +53,8 @@ export class Search {
             this.searchList.push(match);
           }
           alert(`Success`);
-        }, 
-        error => {
-          console.error("Error searching: ", error?.message, error?.error?.message);
-          alert(`Failed to search: ${error?.error?.message}`);
-        }
-      );
+        }    
+      });
     } catch(error) {
       console.error("Error searching: ", error);
       alert(`Failed to search: ${error}`);
@@ -66,10 +67,15 @@ export class Search {
     this.isWaitingResponse = true;
     this.searchList = [];
     try {
-      this.httpService.postDataNoAuth("users/edit", {
+      this.httpService.postDataNoAuth("users/getUser", {
         id: this.searchOne_form.value?.id,
         email: this.searchOne_form.value?.email,
       }).subscribe((res) => {
+        if (res.error) {
+          console.error("Error searching user: ", res?.message);
+          alert(`Failed to search user: ${res.message}`);
+        }
+        else {
           console.log(`Successful search`);
           for (let i = 0; i < res.userMatches.length; i++) {
             let match : SearchResults = {
@@ -86,12 +92,8 @@ export class Search {
             this.searchList.push(match);
           }
           alert(`Success`);
-        }, 
-        error => {
-          console.error("Error search: ", error?.message, error?.error?.message);
-          alert(`Failed to search: ${error?.error?.message}`);
         }
-      );
+      });
     } catch(error) {
       console.error("Error search: ", error);
       alert(`Failed to search: ${error}`);

@@ -24,7 +24,7 @@ export class AddUser {
   async addUsers() {  // Do later
     this.isWaitingResponse = true;
     try {
-      this.httpService.postDataNoAuth("users/add", {
+      this.httpService.postData("users/add", {
         firstName: this.addUsers_form.value?.firstName,
         lastName: this.addUsers_form.value?.lastName,
         password: this.addUsers_form.value?.password,
@@ -32,14 +32,15 @@ export class AddUser {
         email: this.addUsers_form.value?.email,
         accessLevel: this.addUsers_form.value?.accessLevel,
       }).subscribe((res) => {
+        if (res.error) {
+          console.error("Error adding user: ", res?.message);
+          alert(`Failed to add user: ${res.message}`);
+        }
+        else {
           console.log(`Successful creation`);
           alert(`Success`);
-        }, 
-        error => {
-          console.error("Error adding user: ", error?.message, error?.error?.message);
-          alert(`Failed to add user: ${error?.error?.message}`);
         }
-      );
+        });
     } catch(error) {
       console.error("Error adding user: ", error);
       alert(`Failed to add user: ${error}`);

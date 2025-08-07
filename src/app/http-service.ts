@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 })
 export class HttpService {
   private url = 'http://localhost:80/api';  // insert url later
-  constructor(private http: HttpClient = Inject(HttpClient)) {}
+  constructor(private http: HttpClient) {}
   
   getData(endpoint:string, body: {[key: string]: any} = {}): Observable<any> {
     let params = new HttpParams();
@@ -30,6 +30,6 @@ export class HttpService {
 
   postDataNoAuth(endpoint:string, body: {[key:string]:any} = {}): Observable<any> {
     console.log(`Sending post request: ${body}`);
-    return this.http.get(`${this.url}/${endpoint}`, { params: body });
+    return this.http.post(`${this.url}/${endpoint}`, body, {withCredentials: true} );
   }
 }

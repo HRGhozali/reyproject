@@ -21,19 +21,20 @@ export class EditEmail {
   editEmail() {  // Do later
     this.isWaitingResponse = true;
     try {
-      this.httpService.postDataNoAuth("users/editEmail", {
+      this.httpService.postData("users/editEmail", {
         id: this.editEmail_form.value?.id,
         session: this.editEmail_form.value?.session,
         email: this.editEmail_form.value?.email
       }).subscribe((res) => {
-          console.log(`Successful email edit`);
-          alert(`Success`);
-        }, 
-        error => {
-          console.error("Error editing email: ", error?.message, error?.error?.message);
-          alert(`Failed to edit email: ${error?.error?.message}`);
+        if (res.error) {
+          console.error("Error editing email: ", res?.message);
+          alert(`Failed to edit email: ${res.message}`);
         }
-      );
+        else {
+          console.log(`Successful email edit`);
+          alert(`Successfully edited email!`);
+        }
+      });
     } catch(error) {
       console.error("Error editing email: ", error);
       alert(`Failed to edit email: ${error}`);

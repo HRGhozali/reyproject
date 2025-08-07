@@ -25,16 +25,15 @@ export class Login {
         email: this.login_form.value?.email,
         password: this.login_form.value?.password,
       }).subscribe((res) => {
-          console.log(`Successful login`);
-          alert(`Success`);
-          this.router.navigate(['/']).then(() =>
-          window.location.reload());
-        }, 
-        error => {
-          console.error("Error logging in:", error?.message, error?.error?.message);
-          alert(`Failed to log in: ${error?.error?.message}`);
+        if (res.error) {
+          console.error("Error logging in:", res?.message);
+          alert(`Failed to log in: ${res.message}`);
         }
-      );
+        else {
+          console.log(`Successful login as ${res?.data?.email}`);
+          alert(`Successfully logged in as ${res?.data?.email}`);
+        }
+      });
     } catch(error) {
       console.error("Error logging in:", error);
       alert(`Failed to log in: ${error}`);

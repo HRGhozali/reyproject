@@ -20,18 +20,19 @@ export class DeleteUser {
   deleteUser() {  // Do later
     this.isWaitingResponse = true;
     try {
-      this.httpService.postDataNoAuth("users/delete", {
+      this.httpService.postData("users/delete", {
         id: this.deleteUser_form.value?.id,
         session: this.deleteUser_form.value?.session,
       }).subscribe((res) => {
-          console.log(`Successful deletion`);
-          alert(`Success`);
-        }, 
-        error => {
-          console.error("Error deleting user: ", error?.message, error?.error?.message);
-          alert(`Failed to delete user: ${error?.error?.message}`);
+        if (res.error) {
+          console.error(`Error deleting user: ${res.message}`);
+          alert(`Error deleting user: ${res.message}`);
         }
-      );
+        else {
+          console.log(`Successful deletion`);
+          alert(`Successfully deleted user!`);
+        }
+      });
     } catch(error) {
       console.error("Error deleting user: ", error);
       alert(`Failed to delete user: ${error}`);

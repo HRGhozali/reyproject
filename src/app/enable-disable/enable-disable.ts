@@ -22,34 +22,36 @@ isWaitingResponse = false;
     this.isWaitingResponse = true;
     try {
       if (this.enableDisable_form.value?.enDis == "enable") {
-        this.httpService.postDataNoAuth("users/enable", {
+        this.httpService.postData("users/enable", {
           id: this.enableDisable_form.value?.id,
           session: this.enableDisable_form.value?.session,
           enDis: this.enableDisable_form.value?.enDis
         }).subscribe((res) => {
-            console.log(`Successful user enable`);
-            alert(`Success`);
-          }, 
-          error => {
-            console.error("Error enabling user: ", error?.message, error?.error?.message);
-            alert(`Failed to enable user: ${error?.error?.message}`);
+          if (res.error) {
+            console.log(`Error enabling user: ${res.message}`);
+            alert(`Failed to enable user: ${res.message}`);
           }
-        );
+          else {
+            console.log(`Successful user enable`);
+            alert(`Successfully disabled user!`);
+          } 
+        });
       }
       else {
-        this.httpService.postDataNoAuth("users/disable", {
+        this.httpService.postData("users/disable", {
           id: this.enableDisable_form.value?.id,
           session: this.enableDisable_form.value?.session,
           enDis: this.enableDisable_form.value?.enDis
         }).subscribe((res) => {
-            console.log(`Successful user disable`);
-            alert(`Success`);
-          }, 
-          error => {
-            console.error("Error disabling user: ", error?.message, error?.error?.message);
-            alert(`Failed to disable user: ${error?.error?.message}`);
+          if (res.error) {
+            console.error(`Error disabling user: ${res.message}`);
+            alert(`Failed to disable user: ${res.message}`);
           }
-        );
+          else {
+            console.log(`Successful user disable`);
+            alert(`Successfully disabled user!`);
+          }
+        });
       }
     } catch(error) {
       console.error("Error enabling/disabling: ", error);
