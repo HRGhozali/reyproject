@@ -38,7 +38,7 @@ export class AddUser {
         }
         else {
           console.log(`Successful creation`);
-          alert(`Success`);
+          alert(`Successfully created user!`);
         }
         });
     } catch(error) {
