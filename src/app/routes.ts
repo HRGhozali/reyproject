@@ -30,12 +30,27 @@ const routeConfig: Routes = [
     title: 'LPM: Edit User',
   },
   {
+    path: 'editUser/:id',
+    component: EditUser,
+    title: 'LPM: Edit User',
+  },
+  {
     path: 'editEmail',
     component: EditEmail,
     title: 'LPM: Edit Email',
   },
   {
+    path: 'editEmail/:id',
+    component: EditEmail,
+    title: 'LPM: Edit Email',
+  },
+  {
     path: 'deleteUser',
+    component: DeleteUser,
+    title: 'LPM: Delete User',
+  },
+  {
+    path: 'deleteUser/:id',
     component: DeleteUser,
     title: 'LPM: Delete User',
   },

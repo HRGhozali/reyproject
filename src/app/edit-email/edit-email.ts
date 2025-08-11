@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import {FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import { HttpService } from '../http-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-email',
@@ -16,7 +17,17 @@ export class EditEmail {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor(private httpService: HttpService = Inject(HttpService)) {}
+  constructor(private httpService: HttpService = Inject(HttpService), private router: Router) {
+    const nav = this.router.getCurrentNavigation();
+    const user = nav?.extras?.state?.['user'];
+    if (user) {
+      this.editEmail_form.patchValue({
+        id: user.id,
+        session: user.session ?? '',
+        email: user.email ?? '',
+      });
+    }
+  }
 
   editEmail() {  // Do later
     this.isWaitingResponse = true;

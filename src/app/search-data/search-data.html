@@ -15,5 +15,10 @@
         @else if (searchData.updatedBy != '') {
             <p class="searchData-updatedBy">Updated By: {{searchData.updatedBy}}</p>
         }
+        <p class="editLinks">
+            <a [routerLink]="['/editUser', searchData.id]" [state]="{ user: searchData }">Edit User</a> | 
+            <a [routerLink]="['/editEmail', searchData.id]" [state]="{ user: searchData }">Edit Email</a> | 
+            <a [routerLink]="['/deleteUser', searchData.id]" [state]="{ user: searchData }">Delete User</a>
+        </p>
     }
 </section>

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import {FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import { HttpService } from '../http-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-user',
@@ -20,7 +21,21 @@ export class EditUser {
     accessLevel: new FormControl('', [Validators.required, Validators.maxLength(1), Validators.min(1), Validators.max(4)]),
   });
 
-  constructor(private httpService: HttpService = Inject(HttpService)) {}
+  constructor(private httpService: HttpService = Inject(HttpService), private router: Router) {
+    const nav = this.router.getCurrentNavigation();
+    const user = nav?.extras?.state?.['user'];
+    if (user) {
+      this.editUsers_form.patchValue({
+        id: user.id,
+        session: user.session ?? '',
+        firstName: user.firstName ?? user.fullName?.split(' ')[0] ?? '',
+        lastName: user.lastName ?? user.fullName?.split(' ')[1] ?? '',
+        password: '',
+        mobile: user.mobile ?? '',
+        accessLevel: user.accessLevel ?? '',
+      });
+    }
+  }
 
   editUsers() {  // Do later
     this.isWaitingResponse = true;

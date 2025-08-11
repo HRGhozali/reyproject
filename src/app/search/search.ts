@@ -55,6 +55,8 @@ export class Search {
               createdBy: 'irrelevant',
               updatedBy: 'irrelevant',
               isList: true,
+              accessLevel: -1,
+              mobile: 'irrelevant',
               accessName: res.data[i].accessName,
               active: res.data[i].active
             }
@@ -94,6 +96,8 @@ export class Search {
               createdBy: res.data.createdby,
               updatedBy: res.data.updatedby,
               isList: false,
+              accessLevel: res.data.accessLevel,
+              mobile: res.data.mobile,
               accessName: 'irrelevant',
               active: true
             }

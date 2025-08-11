@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import {FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import { HttpService } from '../http-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-delete-user',
@@ -15,7 +16,16 @@ export class DeleteUser {
     session: new FormControl('', [Validators.required]),
   });
 
-  constructor(private httpService: HttpService = Inject(HttpService)) {}
+  constructor(private httpService: HttpService = Inject(HttpService), private router: Router) {
+    const nav = this.router.getCurrentNavigation();
+    const user = nav?.extras?.state?.['user'];
+    if (user) {
+      this.deleteUser_form.patchValue({
+        id: user.id,
+        session: user.session ?? '',
+      });
+    }
+  }
 
   deleteUser() {  // Do later
     this.isWaitingResponse = true;
