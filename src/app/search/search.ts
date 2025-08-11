@@ -1,12 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef } from '@angular/core';
 import {FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import { HttpService } from '../http-service';
 import {SearchResults} from '../search-results';
 import {CommonModule} from '@angular/common';
+import {SearchData} from '../search-data/search-data'
 
 @Component({
   selector: 'app-search',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, SearchData],
   templateUrl: './search.html',
   styleUrl: './search.css'
 })
@@ -23,7 +24,10 @@ export class Search {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor(private httpService: HttpService = Inject(HttpService)) {}
+  constructor(
+    private httpService: HttpService = Inject(HttpService),
+    private cdr: ChangeDetectorRef
+  ) {}
 
   searchMany() {  // Do later
     this.isWaitingResponse = true;
@@ -56,7 +60,8 @@ export class Search {
             }
             this.searchList.push(match);
           }
-          alert(`Success`);
+          this.cdr.detectChanges();
+          alert(`Successfully searched all users!`);
         }    
       });
     } catch(error) {
@@ -81,21 +86,20 @@ export class Search {
         }
         else {
           console.log(`Successful search`);
-          for (let i = 0; i < res.data?.length; i++) {
-            let match : SearchResults = {
-              id: res.data[i].id,
-              fullName: res.data[i].fullName,
-              email: res.data[i].email,
-              session: res.data[i].session,
-              createdBy: res.data[i].createdBy,
-              updatedBy: res.data[i].updatedBy,
+          let match : SearchResults = {
+              id: res.data.id,
+              fullName: res.data.fullName,
+              email: res.data.email,
+              session: res.data.session,
+              createdBy: res.data.createdby,
+              updatedBy: res.data.updatedby,
               isList: false,
               accessName: 'irrelevant',
               active: true
             }
             this.searchList.push(match);
-          }
-          alert(`Success`);
+          this.cdr.detectChanges();
+          alert('Successfully searched user!');
         }
       });
     } catch(error) {

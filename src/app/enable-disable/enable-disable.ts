@@ -33,7 +33,7 @@ isWaitingResponse = false;
           }
           else {
             console.log(`Successful user enable`);
-            alert(`Successfully disabled user!`);
+            alert(`Successfully enabled user!`);
           } 
         });
       }
