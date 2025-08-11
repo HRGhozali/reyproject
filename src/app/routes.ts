@@ -64,5 +64,10 @@ const routeConfig: Routes = [
     component: EnableDisable,
     title: 'LPM: Enable/Disable Users',
   },
+  {
+    path: 'enableDisable/:id',
+    component: EnableDisable,
+    title: 'LPM: Enable/Disable Users',
+  },
 ];
 export default routeConfig;

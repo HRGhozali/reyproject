@@ -18,7 +18,8 @@
         <p class="editLinks">
             <a [routerLink]="['/editUser', searchData.id]" [state]="{ user: searchData }">Edit User</a> | 
             <a [routerLink]="['/editEmail', searchData.id]" [state]="{ user: searchData }">Edit Email</a> | 
-            <a [routerLink]="['/deleteUser', searchData.id]" [state]="{ user: searchData }">Delete User</a>
+            <a [routerLink]="['/deleteUser', searchData.id]" [state]="{ user: searchData }">Delete User</a> | 
+            <a [routerLink]="['/enableDisable', searchData.id]" [state]="{ user: searchData }">Enable/Disable User</a>
         </p>
     }
 </section>
