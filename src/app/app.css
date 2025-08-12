@@ -52,6 +52,7 @@ h1:hover {
     background-color:silver;
     font-weight:bold;
     border-radius:8px;
+    z-index: 2;
 }
 
 .logout:hover {

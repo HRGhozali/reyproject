@@ -4,7 +4,7 @@
             Welcome!
         </div>
         <div class="login-content">
-            <button class="login-btn" [routerLink]="['/login']">Log In</button> <!--[routerLink]="['/login']"-->
+            <button class="login-btn" [routerLink]="['/login']" *ngIf="!isLoggedIn">Log In</button> <!--[routerLink]="['/login']"-->
         </div>
         <div class='content'>
             <h3 class="admin-header">User Functions</h3>

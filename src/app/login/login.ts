@@ -31,7 +31,9 @@ export class Login {
         }
         else {
           console.log(`Successful login as ${res?.data?.email}`);
+          localStorage.setItem('logged', 'true');
           alert(`Successfully logged in as ${res?.data?.email}`);
+          window.location.href = '/';
         }
       });
     } catch(error) {

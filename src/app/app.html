@@ -6,6 +6,7 @@
         User Project Management
       </a>
     </h1>
+    <button *ngIf="isLoggedIn" class="logout" (click)="logout()">Log Out</button>
   </header>
   <header class='small-bottom'></header>
   <section class='fullscreen'></section>
